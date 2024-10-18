@@ -1,10 +1,18 @@
+from tkinter import *
+from tkinter import ttk
 import requests
 import json
-from tkinter import *
 
+
+def generation_list_rates():
+    list_currency = []
+    answer = requests.get('https://open.er-api.com/v6/latest/RUB')
+    json_info = answer.json()
+    list_currency = list(json_info['rates'].keys())
+    return list_currency
 
 def func_exchange():
-    code = e.get().upper()
+    code = combo.get().upper()
     if code:
         answer = requests.get('https://open.er-api.com/v6/latest/RUB')
         json_info = answer.json()
@@ -19,23 +27,24 @@ def func_exchange():
         content_l.config(text='Код валюты не введен')
         content_l.config(fg='red')
 
-
-
-
-
-
 window = Tk()
 window.title('Курс валют')
 window.geometry('400x400')
 
-e = Entry()
-e.pack()
+sp_curen = generation_list_rates()
+
+
+t_m = Label(text='Выберите код валюты:')
+t_m.pack(pady = [10, 10])
+
+combo = ttk.Combobox(values=sp_curen)
+combo.pack(pady = [10, 10])
 
 content_l = Label()
-content_l.pack()
+content_l.pack(pady = [10, 10])
 
 btn = Button(text='Получить курс рубля', command=func_exchange)
-btn.pack()
+btn.pack(pady = [10, 10])
 
 
 
