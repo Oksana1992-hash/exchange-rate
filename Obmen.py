@@ -1,3 +1,4 @@
+from tkinter import ttk
 import requests
 import json
 from tkinter import *
@@ -5,7 +6,7 @@ from tkinter import messagebox as mb
 
 
 def exchange():
-    code = entry.get() # получить из поля ввода то, что ввел пользователь
+    code = combobox.get() # получить из выпадающего списка то, что ввел пользователь
 
     if code: # если код есть:
         try:
@@ -27,10 +28,14 @@ window = Tk()
 window.title('Курсы обмена валюты')
 window.geometry('360x180')
 
-Label(text='Введите код валюты').pack(padx=10, pady=10)
+Label(text='Выберите код валюты').pack(padx=10, pady=10)
 
-entry = Entry()
-entry.pack(padx=10, pady=10)
+cur = ['RUB', 'EUR', 'GBP', 'JPY', 'CNY', 'KZT', 'UZS', 'CHF', 'AED', 'CAD']
+combobox = ttk.Combobox(values=cur)
+combobox.pack(padx=10, pady=10)
+
+# entry = Entry()
+# entry.pack(padx=10, pady=10)
 
 Button(text='Получить курс обмена к доллару', command=exchange).pack(padx=10, pady=10)
 
